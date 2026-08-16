@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>SWAP DNA – Bạn thuộc kiểu dùng năng lượng nào?</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+  /* =========================================================
+     TOKENS — edit colors / fonts here, everything else follows
+  ========================================================== */
+  :root{
+    --cream:#FBF3DC;
+    --cream-deep:#F5EAC8;
+    --ink:#17301F;
+    --ink-soft:#5B6B57;
+    --line:#E7DFC0;
+    --brand-green:#2E8B57;
+    --brand-green-bright:#5FBE86;
+    --brand-green-light:#A9E6C0;
+    --yellow:#F4C24B;
+    --sky:#EAF6E9;
+    --card-radius:28px;
+    --pill-radius:999px;
+    --display:"Baloo 2", sans-serif;
+    --body:"Inter", sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html{-webkit-text-size-adjust:100%;}
+
+  body{
+    font-family:var(--body);
+    background:var(--cream);
+    color:var(--ink);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  img,svg{display:block;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  .screen{display:none;min-height:100vh;min-height:100dvh;width:100%;}
+  .screen.active{display:flex;}
+
+  /* =========================================================
+     HOME — bright, mascot-led, matching SWAP logo world
+  ========================================================== */
+
+  #home{
+    background:
+      radial-gradient(120% 70% at 20% -10%, #DFF7E4 0%, transparent 55%),
+      linear-gradient(165deg, var(--brand-green-bright) 0%, var(--brand-green) 100%);
+    color:var(--ink);
+    align-items:center;
+    justify-content:center;
+    padding:48px 20px 40px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .doodle{position:absolute;stroke:var(--cream);stroke-width:2.4;fill:none;opacity:0.35;stroke-linecap:round;stroke-linejoin:round;}
+  .doodle.turbine{width:70px;top:8%;left:6%;animation:sway 6s ease-in-out infinite;}
+  .doodle.turbine2{width:50px;top:14%;right:8%;animation:sway 7s ease-in-out infinite 0.6s;}
+  .doodle.pylon{width:64px;bottom:4%;right:5%;opacity:0.28;}
+  .doodle.cloud{width:90px;top:4%;right:22%;fill:var(--cream);opacity:0.4;stroke:none;}
+  .doodle.cloud2{width:60px;bottom:30%;left:2%;fill:var(--cream);opacity:0.3;stroke:none;}
+  .doodle.spark{width:22px;top:22%;left:20%;stroke:var(--yellow);opacity:0.7;animation:twinkle 2.4s ease-in-out infinite;}
+  .doodle.spark2{width:16px;top:10%;right:14%;stroke:var(--yellow);opacity:0.6;animation:twinkle 2.4s ease-in-out infinite 1s;}
+
+  @keyframes sway{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+  @keyframes twinkle{0%,100%{opacity:0.2;transform:scale(0.85);}50%{opacity:0.9;transform:scale(1.05);}}
+
+  .home-content{
+    max-width:520px;
+    position:relative;
+    z-index:2;
+    margin:0 auto;
+    animation:riseIn 0.7s ease both;
+  }
+
+  @keyframes riseIn{
+    from{opacity:0;transform:translateY(18px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .logo-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .logo-word{
+    font-family:var(--display);
+    font-weight:800;
+    letter-spacing:2px;
+    font-size:16px;
+    background:var(--cream);
+    color:var(--brand-green);
+    padding:6px 14px;
+    border-radius:var(--pill-radius);
+  }
+
+  .home-mascot{width:150px;margin:6px auto 18px;animation:bob 3.2s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+  .home-eyebrow{
+    display:inline-block;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2px;
+    padding:7px 14px;
+    background:rgba(255,255,255,0.35);
+    border-radius:var(--pill-radius);
+    margin-bottom:16px;
+  }
+
+  .home-title{
+    font-family:var(--display);
+    font-size:clamp(32px, 9vw, 50px);
+    line-height:1.05;
+    font-weight:800;
+    letter-spacing:-0.01em;
+    margin-bottom:16px;
+  }
+  .home-title em{
+    font-style:normal;
+    color:#fff;
+    -webkit-text-stroke:0;
+  }
+
+  .home-desc{
+    max-width:400px;
+    margin:0 auto 28px;
+    line-height:1.6;
+    font-size:15.5px;
+    opacity:0.9;
+  }
+
+  .start-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--ink);
+    color:var(--cream);
+    padding:17px 26px;
+    border-radius:var(--pill-radius);
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:0.3px;
+    transition:transform 0.25s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 12px 26px -10px rgba(0,0,0,0.4);
+  }
+  .start-btn:active{transform:scale(0.97);}
+  .start-btn:hover{transform:translateY(-2px);}
+  .start-btn svg{transition:transform 0.25s;stroke:var(--cream);}
+  .start-btn:hover svg{transform:translateX(4px);}
+
+  .home-note{
+    margin-top:16px;
+    font-size:12px;
+    opacity:0.75;
+  }
+
+  /* --- "meet the 8 types" teaser strip --- */
+  .type-strip{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    max-width:100%;
+    margin:26px auto 0;
+    padding:4px 2px 10px;
+    scrollbar-width:none;
+  }
+  .type-strip::-webkit-scrollbar{display:none;}
+  .type-chip{
+    flex:none;
+    width:52px;height:52px;
+    border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid rgba(255,255,255,0.5);
+  }
+  .type-chip svg{width:30px;height:30px;}
+
+  /* =========================================================
+     QUIZ — mobile-first single column
+  ========================================================== */
+
+  #quiz{background:var(--cream);flex-direction:column;}
+
+  .quiz-header{width:100%;max-width:720px;margin:0 auto;padding:20px 18px 0;}
+
+  .quiz-top{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;font-weight:700;color:var(--ink-soft);
+    letter-spacing:0.5px;margin-bottom:10px;
+  }
+
+  .progress-track{height:8px;background:var(--line);border-radius:100px;overflow:hidden;}
+  .progress-bar{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--brand-green),var(--yellow));
+    border-radius:100px;
+    transition:width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  .quiz-container{
+    width:100%;max-width:720px;margin:0 auto;
+    padding:32px 18px 40px;
+    flex:1;display:flex;flex-direction:column;
+    min-height:0;
+  }
+
+  .question-block{
+    opacity:1;
+    transform:translateX(0);
+    animation:qIn 0.38s cubic-bezier(.2,.9,.2,1) both;
+  }
+  .question-block.leaving{animation:qOut 0.2s ease both;}
+
+  @keyframes qIn{from{opacity:0;transform:translateX(22px);}to{opacity:1;transform:translateX(0);}}
+  @keyframes qOut{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(-22px);}}
+
+  .question-number{
+    color:var(--brand-green);font-weight:700;font-size:12px;
+    letter-spacing:2px;margin-bottom:12px;font-family:var(--display);
+  }
+
+  .question-title{
+    font-family:var(--display);
+    font-size:clamp(22px, 6.2vw, 32px);
+    line-height:1.2;font-weight:600;
+    margin-bottom:24px;
+  }
+
+  .answers{display:grid;grid-template-columns:1fr;gap:12px;}
+
+  .answer-btn{
+    text-align:left;background:#FFFFFF;
+    border:1.5px solid var(--line);border-radius:18px;
+    padding:16px 16px;min-height:60px;font-size:15px;line-height:1.4;
+    display:flex;align-items:center;gap:14px;
+    transition:border-color 0.18s, transform 0.18s, background 0.18s;
+  }
+  .answer-btn:active{transform:scale(0.98);background:var(--sky);}
+  .answer-letter{
+    flex:none;width:28px;height:28px;border-radius:9px;
+    background:var(--cream);color:var(--ink-soft);
+    font-family:var(--display);font-size:13px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    transition:background 0.18s, color 0.18s;
+  }
+  .answer-btn:hover{border-color:var(--brand-green);}
+  .answer-btn:hover .answer-letter{background:var(--brand-green);color:#fff;}
+
+  @media (min-width:700px){
+    .answers{grid-template-columns:1fr 1fr;}
+    .quiz-container{padding-top:56px;}
+  }
+
+  /* =========================================================
+     RESULT — Wrapped-style share card + mascot
+  ========================================================== */
+
+  #result{flex-direction:column;background:var(--cream);}
+
+  .result-wrapper{
+    width:100%;max-width:480px;margin:0 auto;
+    padding:26px 18px 56px;
+    display:flex;flex-direction:column;align-items:center;
+  }
+
+  .result-header{text-align:center;margin-bottom:20px;animation:riseIn 0.5s ease both;}
+  .result-small{font-size:12px;font-weight:700;color:var(--brand-green);letter-spacing:2px;margin-bottom:8px;font-family:var(--display);}
+  .result-header h2{font-size:18px;font-weight:600;color:var(--ink-soft);}
+
+  .card-frame{
+    width:100%;max-width:340px;aspect-ratio:9/16;
+    border-radius:32px;overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(23,48,31,0.35);
+    animation:cardPop 0.6s cubic-bezier(.2,.9,.2,1) both;
+    animation-delay:0.1s;
+  }
+  @keyframes cardPop{from{opacity:0;transform:translateY(24px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+  .story-card{
+    width:100%;height:100%;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:6% 7%;color:#fff;position:relative;overflow:hidden;
+  }
+  .story-card::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 70% at 15% 0%, rgba(255,255,255,0.24), transparent 60%);
+    pointer-events:none;
+  }
+
+  .sc-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;}
+  .sc-wordmark{font-family:var(--display);font-size:13px;font-weight:800;letter-spacing:1.5px;opacity:0.9;}
+  .sc-tag{font-size:10px;font-weight:700;letter-spacing:1.5px;padding:5px 10px;border:1px solid rgba(255,255,255,0.5);border-radius:999px;opacity:0.9;}
+
+  .sc-middle{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:4px;text-align:center;}
+  .sc-mascot{width:34%;margin-bottom:6px;}
+  .sc-type{font-family:var(--display);font-size:clamp(22px, 7vw, 30px);font-weight:800;line-height:1.02;}
+  .sc-tagline{font-size:13px;font-weight:600;line-height:1.4;opacity:0.95;max-width:92%;}
+  .sc-category{
+    font-size:10px;font-weight:800;letter-spacing:1.5px;
+    background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.4);
+    padding:5px 12px;border-radius:999px;margin-top:4px;
+  }
+  .sc-dna-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
+  .sc-chip{font-size:10px;font-weight:700;letter-spacing:0.3px;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.3);padding:5px 9px;border-radius:999px;}
+
+  .sc-bottom{position:relative;z-index:2;}
+  .sc-mission-label{font-size:10px;font-weight:700;letter-spacing:2px;opacity:0.7;margin-bottom:6px;}
+  .sc-mission{font-size:12px;line-height:1.45;opacity:0.95;margin-bottom:12px;}
+  .sc-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:10px;font-weight:700;letter-spacing:1px;opacity:0.65;
+    border-top:1px solid rgba(255,255,255,0.25);padding-top:10px;
+  }
+
+  .result-info{width:100%;margin-top:24px;display:flex;flex-direction:column;gap:14px;animation:riseIn 0.5s ease both;animation-delay:0.2s;}
+
+  .info-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px 20px;}
+  .info-card h3{font-size:11px;letter-spacing:1.5px;color:var(--ink-soft);font-weight:700;margin-bottom:8px;}
+  .info-card p{font-size:15.5px;line-height:1.55;}
+
+  .fact-card{background:var(--sky);border:1px solid var(--brand-green-light);}
+  .fact-card h3{color:var(--brand-green);}
+
+  .mission-card{background:var(--ink);color:var(--cream);border-radius:20px;padding:22px;}
+  .mission-label{font-size:11px;letter-spacing:2px;font-weight:700;opacity:0.6;margin-bottom:8px;}
+  .mission-card h3{font-family:var(--display);font-size:19px;margin-bottom:8px;}
+  .mission-card p{line-height:1.55;font-size:14px;opacity:0.92;}
+
+  .result-actions{width:100%;display:flex;flex-direction:column;gap:10px;margin-top:22px;}
+
+  .share-btn{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    background:var(--ink);color:#fff;padding:16px 20px;border-radius:999px;
+    font-size:14.5px;font-weight:800;letter-spacing:0.3px;transition:transform 0.2s;
+  }
+  .share-btn:active{transform:scale(0.97);}
+  .share-btn svg{width:18px;height:18px;}
+  .share-btn.busy{opacity:0.65;pointer-events:none;}
+
+  .restart-btn{
+    background:transparent;color:var(--ink-soft);border:1.5px solid var(--line);
+    padding:14px 20px;border-radius:999px;font-size:13.5px;font-weight:700;
+  }
+
+  .share-status{text-align:center;font-size:12px;color:var(--ink-soft);min-height:16px;margin-top:4px;}
+
+  @media (min-width:640px){
+    .result-info{flex-direction:row;}
+    .info-card{flex:1;}
+  }
+
+  /* off-screen high-res render target for export, 1080x1920 */
+  #exportRoot{position:fixed;top:0;left:-99999px;width:1080px;height:1920px;pointer-events:none;}
+  #exportRoot .story-card{border-radius:0;}
+  #exportRoot .sc-wordmark{font-size:30px;}
+  #exportRoot .sc-tag{font-size:22px;padding:10px 20px;}
+  #exportRoot .sc-mascot{width:230px;}
+  #exportRoot .sc-type{font-size:70px;}
+  #exportRoot .sc-tagline{font-size:30px;max-width:90%;}
+  #exportRoot .sc-category{font-size:22px;padding:10px 22px;}
+  #exportRoot .sc-chip{font-size:20px;padding:10px 18px;}
+  #exportRoot .sc-mission-label{font-size:22px;}
+  #exportRoot .sc-mission{font-size:27px;}
+  #exportRoot .sc-footer{font-size:20px;padding-top:24px;}
+  #exportRoot .sc-middle{gap:16px;margin-top:10px;}
+  #exportRoot .sc-dna-row{gap:14px;margin-top:12px;}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HOME
+========================================================== -->
+
+<section id="home" class="screen active">
+
+  <svg class="doodle turbine" viewBox="0 0 100 140"><line x1="50" y1="60" x2="50" y2="130"/><circle cx="50" cy="60" r="4"/><path d="M50 60 L20 40 M50 60 L80 40 M50 60 L50 20"/></svg>
+  <svg class="doodle turbine2" viewBox="0 0 100 140"><line x1="50" y1="60" x2="50" y2="130"/><circle cx="50" cy="60" r="4"/><path d="M50 60 L20 40 M50 60 L80 40 M50 60 L50 20"/></svg>
+  <svg class="doodle pylon" viewBox="0 0 100 140"><path d="M50 10 L20 130 M50 10 L80 130 M30 50 L70 50 M25 80 L75 80 M20 110 L80 110"/></svg>
+  <svg class="doodle cloud" viewBox="0 0 100 60"><path d="M20 45 a15 15 0 0 1 0-30 a20 20 0 0 1 38-6 a14 14 0 0 1 2 27 z"/></svg>
+  <svg class="doodle cloud2" viewBox="0 0 100 60"><path d="M20 45 a15 15 0 0 1 0-30 a20 20 0 0 1 38-6 a14 14 0 0 1 2 27 z"/></svg>
+  <svg class="doodle spark" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/></svg>
+  <svg class="doodle spark2" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/></svg>
+
+  <div class="home-content">
+
+    <div class="logo-row"><span class="logo-word">SWAP</span></div>
+
+    <div id="homeMascot" class="home-mascot"></div>
+
+    <div class="home-eyebrow">SWAP DNA TEST</div>
+
+    <h1 class="home-title">Bạn thuộc kiểu <em>dùng năng lượng</em> nào?</h1>
+
+    <p class="home-desc">
+      12 tình huống điện đóm đời thường. 8 kiểu DNA năng lượng.
+      Trả lời thật, xem cách bạn dùng điện nói gì về bạn — và nhận một Swap Mission dành riêng cho bạn.
+    </p>
+
+    <button class="start-btn" onclick="startQuiz()">
+      KHÁM PHÁ DNA CỦA BẠN
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+
+    <div class="home-note">khoảng 2 phút · không cần đăng ký</div>
+
+    <div id="typeStrip" class="type-strip"></div>
+
+  </div>
+</section>
+
+
+<!-- =========================================================
+     QUIZ
+========================================================== -->
+
+<section id="quiz" class="screen">
+
+  <div class="quiz-header">
+    <div class="quiz-top">
+      <span id="questionCounter">01 / 12</span>
+      <span>SWAP DNA</span>
+    </div>
+    <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+  </div>
+
+  <div class="quiz-container">
+    <div id="questionBlock" class="question-block">
+      <div id="questionNumber" class="question-number">QUESTION 01</div>
+      <h2 id="questionTitle" class="question-title">Loading...</h2>
+      <div id="answers" class="answers"></div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESULT
+========================================================== -->
+
+<section id="result" class="screen">
+  <div class="result-wrapper">
+
+    <div class="result-header">
+      <div class="result-small">YOUR SWAP DNA</div>
+      <h2>Đây là kiểu dùng năng lượng của bạn</h2>
+    </div>
+
+    <div class="card-frame">
+      <div id="storyCardPreview" class="story-card"></div>
+    </div>
+
+    <div class="result-info">
+      <div class="info-card">
+        <h3>ENERGY DNA</h3>
+        <p id="resultDNA"></p>
+      </div>
+      <div class="info-card">
+        <h3>YOUR HABIT</h3>
+        <p id="resultHabit"></p>
+      </div>
+    </div>
+
+    <div class="info-card fact-card" style="width:100%;margin-top:14px;">
+      <h3>ENERGY FACT</h3>
+      <p id="resultFact"></p>
+    </div>
+
+    <div class="mission-card" style="width:100%;margin-top:14px;">
+      <div class="mission-label">YOUR SWAP MISSION</div>
+      <h3 id="resultMissionTitle"></h3>
+      <p id="resultMission"></p>
+    </div>
+
+    <div class="result-actions">
+      <button id="shareBtn" class="share-btn" onclick="shareResult()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+        SHARE MY SWAP DNA
+      </button>
+      <div id="shareStatus" class="share-status"></div>
+      <button class="restart-btn" onclick="restartQuiz()">LÀM LẠI TEST</button>
+    </div>
+
+  </div>
+</section>
+
+<div id="exportRoot"><div id="storyCardExport" class="story-card"></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+
+  const INK = "#17301F";
+  const CREAM = "#FBF3DC";
+
+  /* =====================================================
+     ICONS — one simple line-icon per archetype (edit freely)
+     Each is a set of <path> elements on a 24x24 grid.
+  ===================================================== */
+
+  const icons = {
+    saver: '<path d="M12 21c-4-2-7-6-7-11a7 7 0 0 1 14 0c0 5-3 9-7 11Z"/><path d="M12 21V9"/>',
+    balancer: '<path d="M12 3v18"/><path d="M4 7h16"/><path d="M4 7l-3 6a3 3 0 0 0 6 0Z"/><path d="M20 7l-3 6a3 3 0 0 0 6 0Z"/>',
+    optimizer: '<path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/>',
+    adapter: '<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>',
+    conscious: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+    comfort: '<path d="M7 17a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.6-1.7A4.5 4.5 0 0 1 17.5 17H7Z"/>',
+    earlybird: '<circle cx="12" cy="12" r="4.5"/><path d="M12 3v2.5M12 18.5V21M4.2 4.2l1.8 1.8M18 18l1.8 1.8M3 12h2.5M18.5 12H21M4.2 19.8l1.8-1.8M18 6l1.8-1.8"/>',
+    swapper: '<path d="M17 2l4 4-4 4"/><path d="M3 12v-2a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 12v2a4 4 0 0 1-4 4H3"/>',
+    hero: '<path d="M17 2l4 4-4 4"/><path d="M3 12v-2a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 12v2a4 4 0 0 1-4 4H3"/>'
+  };
+
+  function iconSvg(key, color){
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icons[key]}</svg>`;
+  }
+
+  /* =====================================================
+     MASCOT — one reusable simple "person" character.
+     Swap the color + icon per archetype; stays human-shaped,
+     flat, cute, not childish.
+  ===================================================== */
+
+  function personSvg(color, key){
+    const badgeIcon = `<g transform="translate(15,17) scale(1.55)" stroke="${color}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">${icons[key]}</g>`;
+    return `
+    <svg viewBox="0 0 160 176" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="82" cy="166" rx="40" ry="7" fill="${color}" opacity="0.15"/>
+      <rect x="106" y="88" width="17" height="44" rx="8.5" fill="${color}" stroke="${INK}" stroke-width="3"/>
+      <rect x="60" y="130" width="16" height="30" rx="8" fill="${color}" stroke="${INK}" stroke-width="3"/>
+      <rect x="86" y="130" width="16" height="30" rx="8" fill="${color}" stroke="${INK}" stroke-width="3"/>
+      <ellipse cx="68" cy="161" rx="12" ry="6" fill="${INK}"/>
+      <ellipse cx="94" cy="161" rx="12" ry="6" fill="${INK}"/>
+      <rect x="46" y="78" width="68" height="60" rx="28" fill="${color}" stroke="${INK}" stroke-width="3.5"/>
+      <g transform="rotate(-30 34 82)"><rect x="24" y="60" width="17" height="44" rx="8.5" fill="${color}" stroke="${INK}" stroke-width="3"/></g>
+      <circle cx="80" cy="50" r="37" fill="${color}" stroke="${INK}" stroke-width="3.5"/>
+      <ellipse cx="59" cy="58" rx="7" ry="4.5" fill="#fff" opacity="0.4"/>
+      <ellipse cx="101" cy="58" rx="7" ry="4.5" fill="#fff" opacity="0.4"/>
+      <circle cx="68" cy="47" r="4" fill="${INK}"/>
+      <circle cx="92" cy="47" r="4" fill="${INK}"/>
+      <path d="M66 59 Q80 69 94 59" stroke="${INK}" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <circle cx="28" cy="30" r="22" fill="${CREAM}" stroke="${INK}" stroke-width="3"/>
+      ${badgeIcon}
+    </svg>`;
+  }
+
+  /* =====================================================
+     8 SWAP ARCHETYPES
+     swapCategory ties each type back to the campaign's own
+     4 swap levers: TIME / WAY / SOURCE / MINDSET.
+     fact = a real, verifiable energy fact (not brand copy).
+  ===================================================== */
+
+  const archetypes = {
+
+    saver: {
+      name: "THE SAVER",
+      color: "#3E8F5C",
+      colorSoft: "#63B383",
+      swapCategory: "WAY",
+      tagline: "Dùng vừa đủ, sống vừa xanh.",
+      description:
+        "Bạn có xu hướng để ý đến lượng điện mình sử dụng và thường chủ động giảm những tiêu hao không cần thiết. Với bạn, tiết kiệm năng lượng là một thói quen nhỏ nhưng có ý nghĩa lớn.",
+      dna: "Cẩn thận – tiết chế – có ý thức",
+      habit: "Bạn thường tắt thiết bị khi không còn nhu cầu sử dụng.",
+      fact: "Thiết bị để ở chế độ chờ (standby) vẫn âm thầm tiêu thụ điện — dân trong ngành gọi đây là “điện ma” (phantom load).",
+      missionTitle: "ONE SWITCH",
+      mission: "Trong 7 ngày, mỗi lần rời khỏi phòng hãy kiểm tra một lần xem bạn có đang để lại thiết bị điện nào không cần thiết."
+    },
+
+    balancer: {
+      name: "THE BALANCER",
+      color: "#2F7A8C",
+      colorSoft: "#5A9AAA",
+      swapCategory: "MINDSET",
+      tagline: "Không dùng ít hơn. Dùng thông minh hơn.",
+      description:
+        "Bạn không quá cực đoan trong việc tiết kiệm điện. Bạn quan tâm đến việc cân bằng giữa sự tiện lợi, nhu cầu cá nhân và cách sử dụng năng lượng hợp lý.",
+      dna: "Cân bằng – thực tế – linh hoạt",
+      habit: "Bạn thường cân nhắc thiết bị nào thực sự cần bật.",
+      fact: "Tiết kiệm điện hiệu quả không đồng nghĩa với cắt bỏ tiện nghi — phần lớn mức tiêu thụ đến từ việc dùng sai thời điểm hoặc sai công suất cần thiết, chứ không phải từ việc \"dùng\" hay \"không dùng\".",
+      missionTitle: "USE IT RIGHT",
+      mission: "Chọn một thiết bị bạn sử dụng hàng ngày và thử thay đổi thời điểm hoặc cách sử dụng để tránh lãng phí năng lượng."
+    },
+
+    optimizer: {
+      name: "THE OPTIMIZER",
+      color: "#C88916",
+      colorSoft: "#DDA23A",
+      swapCategory: "WAY",
+      tagline: "Mỗi watt đều phải có lý do.",
+      description:
+        "Bạn thích tìm cách khiến cùng một nhu cầu nhưng tiêu tốn ít năng lượng hơn. Bạn có xu hướng tối ưu cách sử dụng thay vì đơn giản là cắt giảm.",
+      dna: "Tối ưu – logic – hiệu quả",
+      habit: "Bạn thường chú ý đến hiệu suất và cách vận hành của thiết bị.",
+      fact: "Thiết bị điện tại Việt Nam có dán nhãn năng lượng (từ 1 đến 5 sao) — càng nhiều sao, thiết bị càng tiêu thụ ít điện hơn cho cùng một công việc.",
+      missionTitle: "SMARTER, NOT LESS",
+      mission: "Trong tuần này, tìm một thiết bị điện bạn dùng thường xuyên và thử một cách sử dụng hiệu quả hơn."
+    },
+
+    adapter: {
+      name: "THE ADAPTER",
+      color: "#7C55A3",
+      colorSoft: "#9A79BB",
+      swapCategory: "TIME",
+      tagline: "Thói quen thay đổi, cách dùng cũng đổi.",
+      description:
+        "Bạn có khả năng điều chỉnh hành vi theo hoàn cảnh. Khi nhu cầu thay đổi, bạn cũng thay đổi cách sử dụng điện để phù hợp hơn.",
+      dna: "Linh hoạt – thích nghi – chủ động",
+      habit: "Bạn không cố định một cách dùng điện cho mọi tình huống.",
+      fact: "Hệ thống điện quốc gia không lưu trữ điện dư thừa dễ dàng — sản xuất và tiêu thụ phải cân bằng theo thời gian thực, nên hành vi dùng điện của số đông vào cùng một khung giờ ảnh hưởng trực tiếp đến áp lực của cả lưới điện.",
+      missionTitle: "SWAP ONE HABIT",
+      mission: "Chọn một thói quen dùng điện thường ngày và thử 'swap' nó sang một cách mới trong 7 ngày."
+    },
+
+    conscious: {
+      name: "THE CONSCIOUS",
+      color: "#B4514F",
+      colorSoft: "#C97A78",
+      swapCategory: "MINDSET",
+      tagline: "Bạn luôn biết mình đang dùng gì.",
+      description:
+        "Bạn có xu hướng quan sát hành vi của chính mình. Điều khiến bạn khác biệt là bạn nhận thức khá rõ mình đang sử dụng điện vào đâu và vì sao.",
+      dna: "Nhận thức – quan sát – chủ động",
+      habit: "Bạn thường để ý những thiết bị đang hoạt động xung quanh mình.",
+      fact: "Điều hòa, bình nóng lạnh và tủ lạnh thường là 3 nhóm thiết bị tiêu thụ điện nhiều nhất trong một hộ gia đình thành thị — biết \"ai ngốn điện nhất\" là bước đầu để dùng điện hiệu quả hơn.",
+      missionTitle: "COUNT YOUR USE",
+      mission: "Trong một ngày, thử quan sát xem ba thiết bị nào đang tiêu thụ điện nhiều nhất trong không gian của bạn."
+    },
+
+    comfort: {
+      name: "THE COMFORT SEEKER",
+      color: "#4E77AE",
+      colorSoft: "#7396C2",
+      swapCategory: "MINDSET",
+      tagline: "Thoải mái trước, nhưng vẫn có giới hạn.",
+      description:
+        "Bạn ưu tiên trải nghiệm và sự thoải mái trong cuộc sống. Điện năng với bạn trước hết là để phục vụ cuộc sống tốt hơn – nhưng đôi khi bạn có thể sử dụng nhiều hơn mức thực sự cần.",
+      dna: "Thoải mái – tận hưởng – tiện lợi",
+      habit: "Bạn thường ưu tiên sự tiện lợi trước khi nghĩ đến mức tiêu thụ điện.",
+      fact: "Chỉ cần tăng nhiệt độ điều hòa thêm 1°C đã có thể giảm đáng kể điện năng tiêu thụ của máy so với mức chênh lệch nhiệt độ lớn hơn — sự thoải mái và tiết kiệm không nhất thiết đánh đổi nhau.",
+      missionTitle: "COMFORT, REDEFINED",
+      mission: "Thử tìm một cách để vẫn giữ được sự thoải mái nhưng giảm một bước tiêu hao năng lượng không cần thiết."
+    },
+
+    earlybird: {
+      name: "THE EARLY BIRD",
+      color: "#D5822E",
+      colorSoft: "#E3A45F",
+      swapCategory: "TIME",
+      tagline: "Đúng lúc cũng là một cách tiết kiệm.",
+      description:
+        "Bạn có xu hướng chú ý đến thời điểm sử dụng điện. Bạn hiểu rằng không chỉ 'dùng bao nhiêu' mà 'dùng khi nào' cũng có thể tạo nên khác biệt.",
+      dna: "Đúng lúc – có nhịp – chủ động",
+      habit: "Bạn dễ hình thành thói quen dùng điện theo lịch sinh hoạt.",
+      fact: "Khung giờ chiều tối là lúc nhu cầu điện sinh hoạt tăng mạnh nhất vì hầu hết mọi nhà cùng nấu ăn, bật điều hòa, sạc thiết bị cùng lúc — dời một phần việc dùng điện sang khung giờ khác giúp san sẻ áp lực này.",
+      missionTitle: "TIME YOUR ENERGY",
+      mission: "Thử sắp xếp một hoạt động sử dụng điện trong ngày vào thời điểm phù hợp hơn thay vì luôn làm theo thói quen."
+    },
+
+    swapper: {
+      name: "THE SWAPPER",
+      color: "#C4548A",
+      colorSoft: "#D67CA6",
+      swapCategory: "SOURCE",
+      tagline: "Một thay đổi nhỏ, một cách dùng mới.",
+      description:
+        "Bạn là kiểu người thích thử những cách làm khác. Thay vì hỏi 'tại sao phải tiết kiệm?', bạn thường hỏi 'có cách nào làm khác đi không?'",
+      dna: "Tò mò – sáng tạo – thích đổi mới",
+      habit: "Bạn dễ thử nghiệm những cách sử dụng thiết bị mới.",
+      fact: "Năng lượng tái tạo như điện mặt trời phụ thuộc vào nắng và gió nên sản lượng dao động theo thời điểm trong ngày — chủ động đổi giờ dùng điện là một cách rất thực tế để tận dụng tốt hơn nguồn năng lượng sạch.",
+      missionTitle: "SWAP IT",
+      mission: "Chọn một hành vi dùng điện bạn làm mỗi ngày và tìm một phiên bản mới thông minh hơn để thử trong 7 ngày."
+    }
+
+  };
+
+
+  /* =====================================================
+     QUESTIONS — 12 tình huống, bám sát 4 trục SWAP của
+     project: TIME · WAY · SOURCE · MINDSET.
+     Sửa nội dung câu hỏi/điểm số ngay tại đây.
+  ===================================================== */
+
+  const questions = [
+
+    {
+      question: "Bạn vừa ra khỏi phòng nhưng phát hiện đèn vẫn đang bật. Bạn sẽ...",
+      answers: [
+        { text: "Quay lại tắt ngay.", score: { saver: 2 } },
+        { text: "Nếu quay lại ngay thì tắt, không thì thôi.", score: { comfort: 2 } },
+        { text: "Tắt đèn nhưng để lại các thiết bị khác.", score: { balancer: 2 } },
+        { text: "Tự hỏi tại sao mình luôn quên tắt đèn.", score: { conscious: 2 } }
+      ]
+    },
+
+    {
+      question: "Khi dùng điều hòa vào ban đêm, bạn thường...",
+      answers: [
+        { text: "Đặt nhiệt độ vừa phải và hẹn giờ.", score: { optimizer: 2 } },
+        { text: "Bật mức mình thấy dễ chịu nhất.", score: { comfort: 2 } },
+        { text: "Nếu thời tiết mát thì tắt.", score: { saver: 2 } },
+        { text: "Thay đổi cách dùng tùy thời tiết.", score: { adapter: 2 } }
+      ]
+    },
+
+    {
+      question: "Điện thoại còn 10% pin nhưng bạn chưa cần ra ngoài. Bạn sẽ...",
+      answers: [
+        { text: "Sạc ngay cho yên tâm.", score: { comfort: 2 } },
+        { text: "Chờ lúc thực sự cần rồi mới sạc.", score: { saver: 2 } },
+        { text: "Sạc vào một khung giờ quen thuộc trong ngày.", score: { earlybird: 2 } },
+        { text: "Tìm cách tối ưu việc dùng pin trước.", score: { optimizer: 2 } }
+      ]
+    },
+
+    {
+      question: "Bạn thường làm gì khi không sử dụng TV?",
+      answers: [
+        { text: "Tắt hẳn.", score: { saver: 2 } },
+        { text: "Để standby vì tiện bật lại.", score: { comfort: 2 } },
+        { text: "Tùy lúc và tùy nhu cầu.", score: { balancer: 2 } },
+        { text: "Tìm cách cài đặt để giảm điện tiêu thụ.", score: { optimizer: 2 } }
+      ]
+    },
+
+    {
+      question: "Khi phòng quá nóng, phản xạ đầu tiên của bạn là...",
+      answers: [
+        { text: "Bật điều hòa ngay.", score: { comfort: 2 } },
+        { text: "Mở cửa hoặc bật quạt trước.", score: { saver: 2 } },
+        { text: "Xem nguyên nhân nóng rồi mới quyết định.", score: { conscious: 2 } },
+        { text: "Thử nhiều cách khác nhau.", score: { adapter: 2 } }
+      ]
+    },
+
+    {
+      question: "Khi mua một thiết bị điện mới, bạn quan tâm nhất đến...",
+      answers: [
+        { text: "Nó có tiện và đẹp không.", score: { comfort: 2 } },
+        { text: "Nhãn năng lượng và mức tiêu thụ điện.", score: { optimizer: 2 } },
+        { text: "Mình có thực sự cần nó không.", score: { conscious: 2 } },
+        { text: "Nó có tính năng gì mới để thử không.", score: { swapper: 2 } }
+      ]
+    },
+
+    {
+      question: "Cần giặt một mẻ đồ vào buổi tối, đúng khung giờ cả xóm trọ cùng bật máy giặt, nấu ăn, bật điều hòa. Bạn sẽ...",
+      answers: [
+        { text: "Dời sang khung giờ khác (đêm khuya/sáng sớm) để nhẹ tải hơn.", score: { earlybird: 2 } },
+        { text: "Giặt luôn vì tiện, không để ý giờ giấc.", score: { comfort: 2 } },
+        { text: "Giặt đúng lúc cần, không quá cầu kỳ tính giờ.", score: { balancer: 2 } },
+        { text: "Đổi hẳn thói quen: gom đồ giặt ít lần hơn nhưng mỗi lần nhiều hơn.", score: { swapper: 2 } }
+      ]
+    },
+
+    {
+      question: "Bạn phát hiện mình đang bật hai thiết bị cho cùng một nhu cầu. Bạn sẽ...",
+      answers: [
+        { text: "Tắt một cái ngay.", score: { saver: 2 } },
+        { text: "Xem cái nào hiệu quả hơn rồi giữ lại.", score: { optimizer: 2 } },
+        { text: "Nếu cả hai đều tiện thì cứ dùng.", score: { comfort: 2 } },
+        { text: "Tìm một phương án khác hoàn toàn.", score: { swapper: 2 } }
+      ]
+    },
+
+    {
+      question: "Khi đi ngủ, bạn thường...",
+      answers: [
+        { text: "Kiểm tra và tắt hầu hết thiết bị.", score: { conscious: 2 } },
+        { text: "Chỉ tắt những thứ thực sự cần.", score: { balancer: 2 } },
+        { text: "Để nguyên cho tiện sáng hôm sau.", score: { comfort: 2 } },
+        { text: "Có một routine riêng để tối ưu điện.", score: { optimizer: 2 } }
+      ]
+    },
+
+    {
+      question: "Nếu có hai cách hoàn thành cùng một việc, bạn thường chọn...",
+      answers: [
+        { text: "Cách tiện nhất.", score: { comfort: 2 } },
+        { text: "Cách tiết kiệm năng lượng hơn.", score: { saver: 2 } },
+        { text: "Cách hiệu quả nhất.", score: { optimizer: 2 } },
+        { text: "Cách mình chưa từng thử.", score: { swapper: 2 } }
+      ]
+    },
+
+    {
+      question: "Nhà/phòng trọ bạn có thể lắp điện mặt trời mái nhà. Bạn sẽ...",
+      answers: [
+        { text: "Chủ động dùng điện nhiều hơn vào ban ngày để tận dụng lúc nắng tốt.", score: { swapper: 2 } },
+        { text: "Không đổi gì, cứ dùng điện lưới như cũ.", score: { comfort: 2 } },
+        { text: "Tìm hiểu kỹ hiệu suất, chi phí trước khi quyết định.", score: { optimizer: 2 } },
+        { text: "Tò mò quan sát xem sản lượng thay đổi thế nào theo thời tiết.", score: { conscious: 2 } }
+      ]
+    },
+
+    {
+      question: "Bạn nghĩ điều quan trọng hơn khi sử dụng điện là...",
+      answers: [
+        { text: "Dùng ít hơn.", score: { saver: 2 } },
+        { text: "Dùng đúng nhu cầu.", score: { balancer: 2 } },
+        { text: "Dùng thông minh hơn.", score: { optimizer: 2 } },
+        { text: "Thay đổi cách chúng ta đang dùng.", score: { swapper: 2 } }
+      ]
+    }
+
+  ];
+
+
+  /* =====================================================
+     QUIZ ENGINE
+  ===================================================== */
+
+  let currentQuestion = 0;
+  let winnerKey = null;
+
+  let scores = {
+    saver: 0, balancer: 0, optimizer: 0, adapter: 0,
+    conscious: 0, comfort: 0, earlybird: 0, swapper: 0
+  };
+
+
+  function startQuiz(){
+    currentQuestion = 0;
+    Object.keys(scores).forEach(key => scores[key] = 0);
+    showScreen("quiz");
+    renderQuestion();
+  }
+
+
+  function renderQuestion(){
+    const question = questions[currentQuestion];
+    const number = String(currentQuestion + 1).padStart(2, "0");
+    const total = String(questions.length).padStart(2, "0");
+
+    document.getElementById("questionCounter").textContent = `${number} / ${total}`;
+    document.getElementById("progressBar").style.width = `${(currentQuestion / questions.length) * 100}%`;
+
+    const block = document.getElementById("questionBlock");
+    // reset animation state fully (this is what caused the blank-question bug:
+    // "leaving" was never cleared, so the next question stayed at opacity 0)
+    block.classList.remove("question-block", "leaving");
+    void block.offsetWidth; // restart animation
+    block.classList.add("question-block");
+
+    document.getElementById("questionNumber").textContent = `QUESTION ${number}`;
+    document.getElementById("questionTitle").textContent = question.question;
+
+    const answersContainer = document.getElementById("answers");
+    answersContainer.innerHTML = "";
+
+    question.answers.forEach((answer, index) => {
+      const button = document.createElement("button");
+      button.className = "answer-btn";
+      const letter = String.fromCharCode(65 + index);
+      button.innerHTML = `<span class="answer-letter">${letter}</span><span>${answer.text}</span>`;
+      button.onclick = () => selectAnswer(answer.score);
+      answersContainer.appendChild(button);
+    });
+  }
+
+
+  function selectAnswer(score){
+    Object.keys(score).forEach(type => { scores[type] += score[type]; });
+
+    const block = document.getElementById("questionBlock");
+    block.classList.add("leaving");
+
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1){
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        document.getElementById("progressBar").style.width = "100%";
+        setTimeout(showResult, 150);
+      }
+    }, 180);
+  }
+
+
+  /* =====================================================
+     RESULT ENGINE
+  ===================================================== */
+
+  function buildStoryCardHTML(key){
+    const r = archetypes[key];
+    return `
+      <div class="sc-top">
+        <span class="sc-wordmark">SWAP DNA</span>
+        <span class="sc-tag">RESULT</span>
+      </div>
+      <div class="sc-middle">
+        <div class="sc-mascot">${personSvg("#ffffff", key)}</div>
+        <div class="sc-type">${r.name}</div>
+        <div class="sc-tagline">${r.tagline}</div>
+        <div class="sc-category">SWAP POINT · ${r.swapCategory}</div>
+        <div class="sc-dna-row">
+          ${r.dna.split(" – ").map(t => `<span class="sc-chip">${t.toUpperCase()}</span>`).join("")}
+        </div>
+      </div>
+      <div class="sc-bottom">
+        <div class="sc-mission-label">SWAP MISSION · ${r.missionTitle}</div>
+        <div class="sc-mission">${r.mission}</div>
+        <div class="sc-footer">
+          <span>#SWAPDNA</span>
+          <span>SWAP · Điện Tử Tế</span>
+        </div>
+      </div>
+    `;
+  }
+
+
+  function showResult(){
+    winnerKey = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+    const r = archetypes[winnerKey];
+
+    const gradient = `linear-gradient(160deg, ${r.colorSoft} 0%, ${r.color} 100%)`;
+
+    const preview = document.getElementById("storyCardPreview");
+    preview.style.background = gradient;
+    preview.innerHTML = buildStoryCardHTML(winnerKey);
+
+    const exportCard = document.getElementById("storyCardExport");
+    exportCard.style.background = gradient;
+    exportCard.innerHTML = buildStoryCardHTML(winnerKey);
+
+    document.getElementById("resultDNA").textContent = r.dna;
+    document.getElementById("resultHabit").textContent = r.habit;
+    document.getElementById("resultFact").textContent = r.fact;
+    document.getElementById("resultMissionTitle").textContent = r.missionTitle;
+    document.getElementById("resultMission").textContent = r.mission;
+
+    showScreen("result");
+  }
+
+
+  function restartQuiz(){
+    document.getElementById("shareStatus").textContent = "";
+    showScreen("home");
+  }
+
+
+  function showScreen(id){
+    document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+
+  /* =====================================================
+     HOME DECOR — hero mascot + "meet the 8 types" strip
+  ===================================================== */
+
+  function initHome(){
+    document.getElementById("homeMascot").innerHTML = personSvg("#F4C24B", "hero");
+
+    const strip = document.getElementById("typeStrip");
+    strip.innerHTML = "";
+    Object.keys(archetypes).forEach(key => {
+      const a = archetypes[key];
+      const chip = document.createElement("div");
+      chip.className = "type-chip";
+      chip.style.background = a.color;
+      chip.title = a.name;
+      chip.innerHTML = iconSvg(key, "#ffffff");
+      strip.appendChild(chip);
+    });
+  }
+
+  initHome();
+
+
+  /* =====================================================
+     SHARE / DOWNLOAD — Web Share API first, PNG fallback
+  ===================================================== */
+
+  async function shareResult(){
+    const btn = document.getElementById("shareBtn");
+    const status = document.getElementById("shareStatus");
+    const node = document.getElementById("storyCardExport");
+
+    btn.classList.add("busy");
+    status.textContent = "Đang tạo ảnh...";
+
+    try {
+      const canvas = await html2canvas(node, {
+        width: 1080,
+        height: 1920,
+        backgroundColor: null,
+        scale: 1,
+        useCORS: true
+      });
+
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png", 1));
+      const fileName = `swap-dna-${winnerKey}.png`;
+      const file = new File([blob], fileName, { type: "image/png" });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })){
+        await navigator.share({
+          files: [file],
+          title: "SWAP DNA",
+          text: "Đây là kiểu dùng năng lượng của tôi trên SWAP DNA!"
+        });
+        status.textContent = "Đã mở chia sẻ ✓";
+      } else {
+        downloadBlob(blob, fileName);
+        status.textContent = "Đã tải ảnh về máy ✓";
+      }
+    } catch (err){
+      if (err && err.name === "AbortError"){
+        status.textContent = "";
+      } else {
+        console.error(err);
+        status.textContent = "Có lỗi khi tạo ảnh, thử lại nhé.";
+      }
+    } finally {
+      btn.classList.remove("busy");
+    }
+  }
+
+
+  function downloadBlob(blob, fileName){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+</script>
+
+</body>
+</html>
